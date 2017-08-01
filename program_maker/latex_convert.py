@@ -1,13 +1,13 @@
-from unicode_tex import tex_args
+from unicode_tex import tex_args, unicode_to_tex
 
 
 def create_overview(conference, filename):
-    # coference: conference_structure.Conference
+    # conference: conference_structure.Conference
 
     txt = u"%%%% CONTRIBUTION OVERVIEW"
     for d in conference.get_day_ids():
         weekday = conference.get_all_sessions_at_day(d)[0].weekday
-        txt += u"\n\n\\daybegin{" + weekday + ", " + str(d) + " September 2017}\n"
+        txt += u"\n\n\\overviewdaybegin{" + weekday + ", " + str(d) + " September 2017}\n"
         for t in conference.get_times(d):
             newtime_begin_required = True
 
@@ -15,21 +15,26 @@ def create_overview(conference, filename):
                 session = conference.get_session(d, t, r)
                 if newtime_begin_required:
                     if session.type == "poster":
-                        txt += u"\n\\timebegin" + tex_args(t, session.end_str, 
+                        txt += u"\n\\overviewtimeslotbegin" + tex_args(t, session.end_str,
                                 session.title[:session.title.find("-")].strip()) + "\n"
                     else:
-                        txt += u"\n\\timebegin" + tex_args(t, session.end_str, "Spoken Session") + "\n"
+                        txt += u"\n\\overviewtimeslotbegin" + tex_args(t, session.end_str, "Spoken Session") + "\n"
                     newtime_begin_required = False
 
                 if session.type == "poster":
-                    txt += u"\\postersessionstart{}\n"
+                    txt += u"\\overiewposterbegin{}\n"
                 else:
                     if session.type == "symposium":
-                        tmp= "Symposium: " + session.title
+                        type_txt = "Symposium"
                     else:
-                        tmp = session.title
-                    txt += u"\n\\talksessionstart" + tex_args(tmp, session.smallest_conf_id,
-                                                              session.largets_conf_id, session.room) +"\n"
+                        type_txt = ""
+                    if len(session.chair)>0:
+                        info_code = u"{\\newline\\sl Chair: " + unicode_to_tex(session.chair) + u"}"
+                    else:
+                        info_code = u"{}"
+                    txt += u"\n\\overiewsessionbegin" + tex_args(u"{}-{}".format(session.smallest_conf_id, session.largets_conf_id),
+                                                                 type_txt, session.room,
+                                                                 session.title) + info_code +"\n"
 
 
 
@@ -40,15 +45,62 @@ def create_overview(conference, filename):
                                                 c.formated_authors(fullnames=False, first_name_initials=False),
                                                                    c.title) +"\n"
                         else:
-                            txt += u"    \\talkshort" + tex_args(c.conf_id, c.start_str,
+                            txt += u"    \\talkshort" + tex_args(c.conf_id, c.start_str, c.end_str,
                                                 c.formated_authors(fullnames=False, first_name_initials=False),
-                                                                                      c.title, c.end_str) + "\n"
-                txt += u"\sessionend{}\n\n"
+                                                                                      c.title) + "\n"
+                txt += u"\overiewsessionend{}\n\n"
 
-            txt += u"\n\\timeend{}\n"
-        txt += u"\n\n\\dayend{}\n"
+            txt += u"\n\\overviewtimeslotend{}\n"
+        txt += u"\n\n\\overviewdayend{}\n"
 
 
+    print("writing: " + filename)
+    with open(filename, "wb") as f:
+       f.write(txt.encode("UTF-8"))
+
+
+
+def create_abstracts(conference, filename):
+    # conference: conference_structure.Conference
+    #FIXME emails?
+
+    poster = u""
+    talks = u""
+
+    for d in conference.get_day_ids():
+        for session in conference.get_all_sessions_at_day(d):
+            txt = u""
+            session_time = u"{0}, {1}-{2}".format(session.weekday, session.start_str, session.end_str)
+
+            if session.type == "poster":
+                txt += u"\n\\abstractposterbegin" + tex_args(session_time, session.room,
+                                                               session.title[:session.title.find("-")].strip()) + "\n"
+            else:
+                if session.type == "symposium":
+                    tmp = "Symposium: " + session.title
+                else:
+                    tmp = session.title
+                txt += u"\n\\abstractsessionbegin" + tex_args(session_time,session.room, tmp) + "\n" #FIXME chair
+
+            for c in session.contributions:
+                if session.type == "poster":
+                    start_time = ""
+                else:
+                    start_time = u"{0}-{1}".format(c.start_str, c.end_str)
+                txt += u"    \\escopabstract" + tex_args(c.conf_id, start_time) + \
+                                        u"{" + c.formated_authors(fullnames=True, first_name_initials=False,
+                                                                  affiliation_ids=True, orga_id_format=u"$^{{{0}}}$",
+                                                                  tex_code=True) + u"}" + \
+                                        u"{" + c.formated_organisations(orga_id_format=u"$^{{{0}}}$", tex_code=True) + u"}" + \
+                                        tex_args(c.title, c.abstract, c.first_author_email) + "\n\n"
+
+            txt += u"\\abstractsessionend{}\n\n"
+            if session.type == "poster":
+                poster += txt
+            else:
+                talks += txt
+
+    txt = u"%%%% ABSTRACTS" + talks + poster
     print("writing: " + filename)
     with open(filename, "wb") as f:
        f.write(txt.encode("UTF-8"))

@@ -1,9 +1,9 @@
 \documentclass[%
-  B5paper,
+  a4paper,
   pagesize,%         write pagesize to DVI or PDF
   1headlines,%       need only one line for the head
   8pt,%             use this font size
-  DIV=14,
+  DIV=16,
   BCOR=12mm,
   twoside,
   %twocolumn,
@@ -15,17 +15,21 @@
 
 \usepackage{draftwatermark}
 \SetWatermarkScale{0.3}
-\SetWatermarkText{Preliminary Schedule}
+\SetWatermarkText{Draft}
 
 \begin{document}
 \sloppy
 
+
 \thispagestyle{empty}
 \begin{center}
 \unilogo\\
-\Huge\bf Potsdam\\ List of Contributions \\
+\Huge\bf Potsdam\\ Abstracts \\
 \end{center}
 
-\input{"contribution_overview.incl.tex"}
+
+\begin{multicols}{2}
+\input{"abstracts.incl.tex"}
+\end{multicols}{2}
 
 \end{document}

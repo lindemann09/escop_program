@@ -9,6 +9,7 @@
 \usepackage{multicol}
 \usepackage{graphicx}
 \usepackage{bold-extra}
+\usepackage{eurosym}
 
 
 \addtokomafont{section}{\rm\bf\LARGE\centering}
@@ -30,44 +31,76 @@
 \newcommand{\reference}{\par\noindent\small}
 
 
-\newcommand{\daybegin}[1]{
+\newcommand{\overviewdaybegin}[1]{
 	%\newpage
     \chead[]{\sl #1}
 	\vspace{4ex}\begin{center}
 	\LARGE\bfseries{\scshape{#1}}
 	\end{center}	}
 
-\newcommand{\dayend}{
+\newcommand{\overviewdayend}{
 	\newpage}
 	
-\newcommand{\timebegin}[3]{
+\newcommand{\overviewtimeslotbegin}[3]{
 	\vspace{3ex}
 	\begin{center}
 	\Large\bfseries{{#1 - #2\\ #3}} 
 	\end{center}
 
-    \begin{multicols}{2}
+    %\begin{multicols}{2}
 	}
 
-\newcommand{\timeend}{
-    \end{multicols}
+\newcommand{\overviewtimeslotend}{
+    %\end{multicols}
 }
 
-\newcommand{\talksessionstart}[4]{
-			\vfill\vspace{3ex}\par\noindent {\large\bf #4 -- #1 } 
+\newcommand{\overiewsessionbegin}[5]{ 
+            % id-range, type, room, title, info (e.g. chair)
+			\vspace{3ex}\par\noindent {\large\bf #3: #2 \\#4} #5
+            
 			\begin{description}}
 
-\newcommand{\postersessionstart}{
+\newcommand{\overiewposterbegin}{
             \par\noindent \begin{description}
 }
 
-\newcommand{\sessionend}{
+\newcommand{\overiewsessionend}{
 	\end{description}}
 
+
 \newcommand{\postershort}[3]{
-	\item[\bf -] #2 {\sl}}
+	\item[\bf -] #2 {\sl #3}}
 
 \newcommand{\talkshort}[5]{
-	\item[\bf #2-#5] #3 {\sl}}
+	\item[\bf #2-#3] #4 {\sl #5}}
 
+\newcommand{\escopabstract}[7]{
+    %id, time, title, author, affiliations, email
+    \noindent %\begin{minipage}{\linewidth}
+    \begin{centering}
+    {$\cdot\cdot$~~#2 (#1)~~$\cdot\cdot$} \par
+    \end{centering}
+    {\noindent\bf #5}. %\vspace{1ex}\par
+    {\sc #3}; %\vspace{1ex} \par
+    {\sl #4}\par
+    #6 \par
+    %\end{minipage}\hfill\hbox{}
+    {\noindent Email: \vspace{1em} #7\par}
+    \vspace{2ex}
+}
+
+\newcommand{\abstractsessionbegin}[3]{
+    \vspace{3ex}\begin{center}
+    \bf #3 \\ #2, #1
+    \end{center}
+    \par
+}
+
+\newcommand{\abstractposterbegin}[3]{
+    \vspace{3ex}\begin{centering}
+    \bf #3 \\ #2, #1
+    \end{centering}
+    \par
+}
+\newcommand{\abstractsessionend}{}
 

@@ -3,6 +3,8 @@ from collections import OrderedDict
 from orderedset import OrderedSet
 from csv import DictReader
 
+from unicode_tex import unicode_to_tex
+
 # helper functions
 def unicode_list(txt, separator=","):
     # helper
@@ -41,7 +43,7 @@ class Authors():
 
 class Contribution():
 
-    def __init__(self, authors, title, organizations, abstract, type, start, end):
+    def __init__(self, authors, title, organizations, abstract, type, start, end, emails):
         # organisations for each author len(authors)==len(organizations)
         # multiple organisation of one authors are seperated by ";"
         # start ,end: time.struct_time
@@ -52,6 +54,7 @@ class Contribution():
         self.type = type
         self.start = start
         self.end = end
+        self.emails = emails
 
         # find all organizations
         self.unique_organisations = []
@@ -75,16 +78,20 @@ class Contribution():
 
 
     def formated_authors(self, fullnames=False, first_name_initials=False,
-                affiliation_ids=False, orga_id_format=u"[{0}"):
+                affiliation_ids=False, orga_id_format=u"[{0}]", tex_code=False):
+        # tex_code=True: convert all unicode strings to text code, except keep untouched "orga_id_format"
 
         if len(self.authors) == 1:
             if fullnames:
-                rtn = self.first_names[cnt] + " " + self.last_names[0]
+                rtn = self.first_names[0] + " " + self.last_names[0]
             else:
                 rtn = self.last_names[0]
                 if first_name_initials:
                     rtn += ", " + initials(self.first_names[0])
-            return rtn
+            if tex_code:
+                return unicode_to_tex(rtn)
+            else:
+                return rtn
 
         else:
             rtn = u""
@@ -94,30 +101,44 @@ class Contribution():
                     sep = u" & "
 
                 if fullnames:
-                    rtn += sep + self.first_names[cnt] + " " + last_name
+                    name = sep + self.first_names[cnt] + " " + last_name
                 else:
-                    rtn += sep + last_name
+                    name = sep + last_name
                     if first_name_initials:
-                        rtn += ", " + initials(self.first_names[cnt])
+                        name += ", " + initials(self.first_names[cnt])
+                if tex_code:
+                    rtn += unicode_to_tex(name)
+                else:
+                    rtn += name
                 if affiliation_ids and len(self.unique_organisations)>1:
                     rtn += orga_id_format.format(unicode(self.affiliation_ids[cnt])[1:-1])
 
             return rtn[2:]
 
 
-    def formated_organisations(self, orga_id_format = u"[{0}]"):
+    def formated_organisations(self, orga_id_format = u"[{0}] ", tex_code=False):
+        # tex_code=True: convert all unicode strings to text code, except keep untouched "orga_id_format"
 
         if len(self.unique_organisations) == 1:
-            return self.unique_organisations[0]
+            if tex_code:
+                return unicode_to_tex(self.unique_organisations[0])
+            else:
+                return self.unique_organisations[0]
         else:
             rtn = u""
-            for cnt, x in enumerate(self.unique_organisations):
-                rtn += "; " + orga_id_format.format(cnt + 1) + u" " + x
+            for cnt, orga in enumerate(self.unique_organisations):
+                if tex_code:
+                    orga = unicode_to_tex(orga)
+                rtn += "; " + orga_id_format.format(cnt + 1) + orga
             return rtn[2:]
 
     @property
     def first_author_lastname(self):
         return self.last_names[0]
+
+    @property
+    def first_author_email(self):
+        return self.emails[0]
 
     @property
     def start_str(self):
@@ -141,6 +162,7 @@ class Session():
         self.start = strptime(self.dict['session_start'], "%Y-%m-%d %H:%M")
         self.end = strptime(self.dict['session_end'], "%Y-%m-%d %H:%M")
         self.room =  self.dict['session_room']
+        self.chair = unicode(entry_dict['chair1'], 'utf-8').strip()
 
         # symposia have the organizior in title [title (organizor)]
         self.title = unicode(entry_dict['session_title'].strip(), 'utf-8')
@@ -161,6 +183,7 @@ class Session():
             title = unicode(entry_dict['p{}_title'.format(x)], 'utf-8')
             if len(title)!=0:
                 authors = unicode_list(entry_dict['p{}_authors'.format(x)], separator="\n")
+                emails = unicode_list(entry_dict['p{}_emails'.format(x)], separator="\n")
                 organizations = unicode_list(entry_dict['p{}_organisations'.format(x)], separator="\n")
                 abstract = unicode(entry_dict['p{}_abstract'.format(x)], 'utf-8')
                 try:
@@ -175,13 +198,15 @@ class Session():
                                                        abstract=abstract,
                                                        type=self.type,
                                                        start=start,
-                                                       end=end))
+                                                       end=end,
+                                                       emails=emails)) #TODO
 
             else:
                 break # empty tile --> last talk of session
 
         # sort contribution by time
         self.contributions.sort(key=lambda x: x.start, reverse=False)
+
 
     @property
     def start_str(self):
@@ -245,7 +270,7 @@ class Conference():
             for y in s_dict[x]:
                 s_dict[x][y] = OrderedDict(sorted(s_dict[x][y].items())) # sort room
 
-        self._dict = s_dict
+        self._session_dict = s_dict
 
         ## make_conference_ids
         poster_cnt = 0
@@ -264,21 +289,20 @@ class Conference():
                             x.conf_id = talk_cnt
 
     def get_day_ids(self):
-        return self._dict.keys()
+        return self._session_dict.keys()
 
     def get_times(self, day):
-        return self._dict[day].keys()
+        return self._session_dict[day].keys()
 
     def get_rooms(self, day, time):
-        return self._dict[day][time].keys()
+        return self._session_dict[day][time].keys()
 
     def get_session(self, day, time, room):
-        return self._dict[day][time][room]
-
+        return self._session_dict[day][time][room]
 
     def get_latest_end_time(self, day, time):
         latest_end = gmtime(0)
-        for session in self._dict[day][time].values():
+        for session in self._session_dict[day][time].values():
             for x in session.contributions:
                 if latest_end < x.end:
                     latest_end = x.end
@@ -287,5 +311,7 @@ class Conference():
     def get_all_sessions_at_day(self, day):
         rtn = []
         for time in self.get_times(day):
-            rtn.extend(self._dict[day][time].values())
+            rtn.extend(self._session_dict[day][time].values())
+
+        rtn.sort(key=lambda x: x.smallest_conf_id)
         return rtn
