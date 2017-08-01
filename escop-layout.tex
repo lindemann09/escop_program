@@ -1,0 +1,73 @@
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{scrpage2}
+\usepackage{palatino}
+\usepackage{array}
+\usepackage{xcolor,colortbl}
+\usepackage{bold-extra}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{bold-extra}
+
+
+\addtokomafont{section}{\rm\bf\LARGE\centering}
+\renewcommand{\descfont}{\rmfamily\bfseries}
+
+\pagestyle{scrheadings}
+\ihead[]{}
+\chead[]{}
+\ohead[\pagemark]{\it\pagemark}
+\ifoot[]{}
+\cfoot[]{}
+\ofoot[]{}
+
+\newcommand{\colbreak}{\vfill\null\columnbreak}
+
+\newcommand{\unilogo}{\includegraphics[width=0.4\textwidth]{Logo_ESCoP2017}}
+
+\newcommand{\uni}[1]{\ensuremath{^{\textrm{\tiny#1}}}}
+\newcommand{\reference}{\par\noindent\small}
+
+
+\newcommand{\daybegin}[1]{
+	%\newpage
+    \chead[]{\sl #1}
+	\vspace{4ex}\begin{center}
+	\LARGE\bfseries{\scshape{#1}}
+	\end{center}	}
+
+\newcommand{\dayend}{
+	\newpage}
+	
+\newcommand{\timebegin}[3]{
+	\vspace{3ex}
+	\begin{center}
+	\Large\bfseries{{#1 - #2\\ #3}} 
+	\end{center}
+
+    \begin{multicols}{2}
+	}
+
+\newcommand{\timeend}{
+    \end{multicols}
+}
+
+\newcommand{\talksessionstart}[4]{
+			\vfill\vspace{3ex}\par\noindent {\large\bf #4 -- #1 } 
+			\begin{description}}
+
+\newcommand{\postersessionstart}{
+            \par\noindent \begin{description}
+}
+
+\newcommand{\sessionend}{
+	\end{description}}
+
+\newcommand{\postershort}[3]{
+	\item[\bf -] #2 {\sl}}
+
+\newcommand{\talkshort}[5]{
+	\item[\bf #2-#5] #3 {\sl}}
+
+

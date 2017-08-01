@@ -1,0 +1,31 @@
+\documentclass[%
+  a4paper,
+  pagesize,%         write pagesize to DVI or PDF
+  1headlines,%       need only one line for the head
+  8pt,%             use this font size
+  DIV=16,
+  BCOR=12mm,
+  twoside,
+  %twocolumn,
+  smallheadings,
+  %halfparskip,
+  %liststotoc,
+]{scrartcl}
+\input{escop-layout.tex}
+
+\usepackage{draftwatermark}
+\SetWatermarkScale{0.3}
+\SetWatermarkText{Preliminary Schedule}
+
+\begin{document}
+\sloppy
+
+\thispagestyle{empty}
+\begin{center}
+\unilogo\\
+\Huge\bf Potsdam\\ List of Contributions \\
+\end{center}
+
+\input{"contribution_overview.incl.tex"}
+
+\end{document}

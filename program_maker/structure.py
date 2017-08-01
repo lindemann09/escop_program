@@ -139,7 +139,7 @@ class Session():
 
         self.dict = entry_dict
         self.start = strptime(self.dict['session_start'], "%Y-%m-%d %H:%M")
-        self.end = strptime(self.dict['session_start'], "%Y-%m-%d %H:%M")
+        self.end = strptime(self.dict['session_end'], "%Y-%m-%d %H:%M")
         self.room =  self.dict['session_room']
 
         # symposia have the organizior in title [title (organizor)]
@@ -188,8 +188,16 @@ class Session():
         return strftime("%H:%M", self.start)
 
     @property
+    def end_str(self):
+        return strftime("%H:%M", self.end)
+
+    @property
     def day(self):
         return strftime("%d", self.start)
+
+    @property
+    def weekday(self):
+        return strftime("%A", self.start)
 
     @property
     def smallest_conf_id(self):
@@ -242,7 +250,7 @@ class Conference():
         ## make_conference_ids
         poster_cnt = 0
         talk_cnt = 0
-        for d in self.get_days():
+        for d in self.get_day_ids():
             poster_cnt += ((talk_cnt/1000)+1)*1000
             for t in self.get_times(d):
                 for r in self.get_rooms(d, t):
@@ -255,7 +263,7 @@ class Conference():
                             talk_cnt += 1
                             x.conf_id = talk_cnt
 
-    def get_days(self):
+    def get_day_ids(self):
         return self._dict.keys()
 
     def get_times(self, day):
@@ -276,4 +284,8 @@ class Conference():
                     latest_end = x.end
         return strftime("%H:%M", latest_end)
 
-
+    def get_all_sessions_at_day(self, day):
+        rtn = []
+        for time in self.get_times(day):
+            rtn.extend(self._dict[day][time].values())
+        return rtn

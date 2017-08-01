@@ -7,7 +7,7 @@
 *.out
 *.toc
 *.fmt
-
+*.fdb_latexmk
 *.dvi
 *.ps
 .eps

@@ -5,19 +5,20 @@ def create_overview(conference, filename):
     # coference: conference_structure.Conference
 
     txt = u"%%%% CONTRIBUTION OVERVIEW"
-    for d in conference.get_days():
-        txt += u"\n\n\\newday{" + str(d) + " Spetember 2017}\n"
+    for d in conference.get_day_ids():
+        weekday = conference.get_all_sessions_at_day(d)[0].weekday
+        txt += u"\n\n\\daybegin{" + weekday + ", " + str(d) + " September 2017}\n"
         for t in conference.get_times(d):
             newtime_begin_required = True
 
             for r in conference.get_rooms(d, t):
                 session = conference.get_session(d, t, r)
-                endtime = conference.get_latest_end_time(d, t)
                 if newtime_begin_required:
                     if session.type == "poster":
-                        txt += u"\n\\newtimebegin" + tex_args(t, endtime, session.title[:16]) + "\n"
+                        txt += u"\n\\timebegin" + tex_args(t, session.end_str, 
+                                session.title[:session.title.find("-")].strip()) + "\n"
                     else:
-                        txt += u"\n\\newtimebegin" + tex_args(t, endtime, "Spoken Session") + "\n"
+                        txt += u"\n\\timebegin" + tex_args(t, session.end_str, "Spoken Session") + "\n"
                     newtime_begin_required = False
 
                 if session.type == "poster":
@@ -44,7 +45,8 @@ def create_overview(conference, filename):
                                                                                       c.title, c.end_str) + "\n"
                 txt += u"\sessionend{}\n\n"
 
-            txt += u"\n\\newtimeend{}\n"
+            txt += u"\n\\timeend{}\n"
+        txt += u"\n\n\\dayend{}\n"
 
 
     print("writing: " + filename)
