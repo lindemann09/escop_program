@@ -15,6 +15,7 @@
 
 *.pyc
 *.idea
+*.swp
 
 *.incl.tex
-
+*.csv

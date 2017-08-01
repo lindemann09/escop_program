@@ -1,0 +1,88 @@
+\documentclass[%
+  a5paper,
+  pagesize,%         write pagesize to DVI or PDF
+  1headlines,%       need only one line for the head
+  8pt,%             use this font size
+  DIV=14,
+  BCOR=12mm,
+  twoside,
+  %twocolumn,
+  smallheadings,
+  %halfparskip,
+  %liststotoc,
+]{scrartcl}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{scrpage2}
+\usepackage{palatino}
+\usepackage{array}
+\usepackage{xcolor,colortbl}
+\usepackage{bold-extra}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{bold-extra}
+
+
+\addtokomafont{section}{\rm\bf\LARGE\centering}
+\renewcommand{\descfont}{\rmfamily\bfseries}
+
+
+\pagestyle{scrheadings}
+\ihead[]{}
+\chead[]{}
+\ohead[\pagemark]{\it\pagemark}
+\ifoot[]{}
+\cfoot[]{}
+\ofoot[]{}
+
+\newcommand{\uni}[1]{\ensuremath{^{\textrm{\tiny#1}}}}
+\newcommand{\reference}{\par\noindent\small}
+
+\newcommand{\newday}[1]{
+	\newpage
+    \chead[]{\sl #1}
+	\vspace{4ex}\begin{center}
+	\LARGE\bfseries{\scshape{#1}}
+	\end{center}	}
+	
+\newcommand{\newtimebegin}[3]{
+	\vspace{3ex}
+	\begin{center}
+	\Large\bfseries{{#1 - #2\\ #3}} 
+	\end{center}
+
+    %\begin{multicols}{2}
+	}
+
+\newcommand{\newtimeend}{
+        %\end{multicols}
+    }
+
+\newcommand{\postershort}[3]{\item[\bf (#1)] #2: {\sl #3}}
+
+\newcommand{\talkshort}[5]{\item[\bf #2-#5] #3: {\sl #4} (#1)}
+
+\newcommand{\talksessionstart}[4]{
+			\vfill\vspace{3ex}\par\noindent {\large\bf #4: #1 (#2-#3)} 
+			\begin{description}}
+
+\newcommand{\postersessionstart}{
+\par\noindent \begin{description}}
+
+\newcommand{\sessionend}{\end{description}}
+
+
+\begin{document}
+
+\thispagestyle{empty}
+%\pagecolor[rgb]{0.9686274509, 0.57254901, 0.0627450980}
+\begin{center}
+\Huge\bf ESCOP 2017, Potsdam\\ Program overview \\
+\end{center}
+
+
+\input{"contribution_overview.incl.tex"}
+
+
+\end{document}
