@@ -4,11 +4,12 @@ Scripts to make the ESCOP program 2017
 
 
 Instructions:
-* extract ConfTool database as csv-files
+* export ConfTool database as csv-files ![Screenshot](picts/conftool_export_options.png)
+* also export Author database
 * specify correct csv-file names in `make_latex_files.py`
 * run `python make_latex_files.py`
 * (optinal) edit ``.*tex`` files
-* run ``pdflatex program_overview.tex``
+* run ``pdflatex program.tex``
 
 
 
