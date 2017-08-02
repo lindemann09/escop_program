@@ -1,0 +1,109 @@
+\documentclass[%
+  b5paper,
+  pagesize,%         write pagesize to DVI or PDF
+  1headlines,%       need only one line for the head
+  8pt,%             use this font size
+  DIV=18,
+  BCOR=12mm,
+  twoside,
+  %twocolumn,
+  smallheadings,
+  %halfparskip,
+  %liststotoc,
+]{scrartcl}
+\input{escop-layout.tex}
+\usepackage{multirow}
+\usepackage{draftwatermark}
+\SetWatermarkScale{0.3}
+\SetWatermarkText{Draft}
+
+\begin{document}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% compact overview %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcolumntype{N}{@{}m{0pt}@{}} %workaround
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\begin{table}[]
+\sffamily\centering
+\renewcommand{\arraystretch}{1.5}%
+\begin{tabular}{|>{\columncolor{TabColor}}l*{4}{P{23mm}}|} \hline 
+%\begin{tabular}{| c c c c c |}
+\rowcolor{TabColor}  & \bfseries Sunday\par 3 September & \bfseries Monday\par 4 September & \bfseries Tuesday\par 5 September & \bfseries Wednesday\par 6 September  \\\hline
+8:00 -- 9:00   &                   & Registration & Registration & Registration \\ \hline
+9:00 -- 10:40  &                   & Talks &  Talks   & Talks \\\cline{1-1}\cline{3-5}
+10:40 -- 12:00 & \multirow{6}{20mm}{\centering 9:00 -- 16:00 Registration \& Satellite Events} & Poster II & Poster III  & Poster IV \\\cline{1-1}\cline{3-5}
+12:00 -- 12:50 &                   &  Lunch & Lunch   & Lunch  \\\cline{1-1}\cline{3-5}
+12:50 -- 14:30 &                   & Talks &  Talks   & Talks  \\\cline{1-1}\cline{3-5}
+14:30 -- 14:40 &                   & Coffe & Coffe & Coffe \\\cline{1-1}\cline{3-5}
+14:40 -- 16:20 &                   & Symposia & Symposia & Symposia \\\hline
+16:20 -- 16:35 &  16.00 Opening \& \par Welcome Notes & Coffe & Coffe & Coffe   \\\hline
+16:35 -- 18:15 &  17:15 Keynote \par Pulvermüller & Symposia & Symposia & Symposia \\\hline
+18:30 -- 19:30 &   18:15 Poster I & Broadbent\par Lecture de Gelder  &  & Bertelson Lecture\par Banissy \\\hline
+19:30 -- 20:30 &  19:30 Opening Reception  & ESCoP Business Meeting & 19:00\par Social Event\par (Boat Cruise) & 20$^\mathrm{th}$ ESCoP Celebration \\\hline
+20:30          &                   &  &  & Science Slam  \\[5ex]\hline
+\end{tabular}
+\end{table}
+\newpage
+
+
+\input{overview.incl.tex}
+%%%%% DAY A
+
+
+%%%%% DAY B
+\begin{sidewaystable}
+\sffamily\centering
+{\Huge\bfseries \dayB}\par\vspace{5mm}
+\begin{tabular}{| >{\columncolor{TabColor}}p{10mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} |}
+\hline
+\rowcolor{TabColor}  &  \hf{\dayBroomA}  &  \hf{\dayBroomB} & \hf{\dayBroomC} & \hf{\dayBroomD} & \hf{\dayBroomE} & \hf{\dayBroomF} \\ \hline
+\rf{\dayBtimeA} & \cf{\dayBroomAtimeA} & \cf{\dayBroomBtimeA} & \cf{\dayBroomCtimeA} & \cf{\dayBroomDtimeA} & \cf{\dayBroomEtimeA} & \cf{\dayBroomFtimeA}  \\[17mm] \hline
+%\rf{\dayBtimeB} & \cf{\dayBroomAtimeB} & \cf{\dayBroomBtimeB} & \cf{\dayBroomCtimeB} & \cf{\dayBroomDtimeB} & \cf{\dayBroomEtimeB} & \cf{\dayBroomFtimeB}  \\[17mm] \hline
+\rf{\dayBtimeB} &  \singlesessionrow{6}{\dayBpostertimeB} \\[8mm] \hline
+\rf{\dayBtimeC} & \cf{\dayBroomAtimeC} & \cf{\dayBroomBtimeC} & \cf{\dayBroomCtimeC} & \cf{\dayBroomDtimeC} & \cf{\dayBroomEtimeC} & \cf{\dayBroomFtimeC}  \\[17mm] \hline
+\rf{\dayBtimeD} & \cf{\dayBroomAtimeD} & \cf{\dayBroomBtimeD} & \cf{\dayBroomCtimeD} & \cf{\dayBroomDtimeD} & \cf{\dayBroomEtimeD} & \cf{\dayBroomFtimeD}  \\[17mm] \hline
+\rf{\dayBtimeE} & \cf{\dayBroomAtimeE} & \cf{\dayBroomBtimeE} & \cf{\dayBroomCtimeE} & \cf{\dayBroomDtimeE} & \cf{\dayBroomEtimeE} & \cf{\dayBroomFtimeE}  \\[17mm] \hline
+\end{tabular}
+\end{sidewaystable} 
+
+
+%%%%% DAY C (one room less)
+\begin{sidewaystable}
+\sffamily\centering
+{\Huge\bfseries \dayC}\par\vspace{5mm}
+\begin{tabular}{| >{\columncolor{TabColor}}p{10mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} |}
+\hline
+\rowcolor{TabColor}  &  \hf{\dayCroomA}  &  \hf{\dayCroomB} & \hf{\dayCroomC} & \hf{\dayCroomD} & \hf{\dayCroomF} \\ \hline
+\rf{\dayCtimeA} & \cf{\dayCroomAtimeA} & \cf{\dayCroomBtimeA} & \cf{\dayCroomCtimeA} & \cf{\dayCroomDtimeA}  & \cf{\dayCroomFtimeA}  \\[17mm] \hline
+%\rf{\dayCtimeB} & \cf{\dayCroomAtimeB} & \cf{\dayCroomBtimeB} & \cf{\dayCroomCtimeB} & \cf{\dayCroomDtimeB} & \cf{\dayCroomFtimeB}  \\[17mm] \hline
+\rf{\dayCtimeB} &  \singlesessionrow{5}{\dayCpostertimeB} \\[8mm] \hline
+\rf{\dayCtimeC} & \cf{\dayCroomAtimeC} & \cf{\dayCroomBtimeC} & \cf{\dayCroomCtimeC} & \cf{\dayCroomDtimeC} & \cf{\dayCroomFtimeC}  \\[17mm] \hline
+\rf{\dayCtimeD} & \cf{\dayCroomAtimeD} & \cf{\dayCroomBtimeD} & \cf{\dayCroomCtimeD} & \cf{\dayCroomDtimeD} & \cf{\dayCroomFtimeD}  \\[17mm] \hline
+\rf{\dayCtimeE} & \cf{\dayCroomAtimeE} & \cf{\dayCroomBtimeE} & \cf{\dayCroomCtimeE} & \cf{\dayCroomDtimeE} & \cf{\dayCroomFtimeE}  \\[17mm] \hline
+\end{tabular}
+\end{sidewaystable} 
+
+%%%%% DAY D (one room less)
+
+\begin{sidewaystable}
+\sffamily\centering
+{\Huge\bfseries \dayD}\par\vspace{5mm}
+\begin{tabular}{| >{\columncolor{TabColor}}p{10mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} |}
+\hline
+\rowcolor{TabColor}  &  \hf{\dayDroomA}  &  \hf{\dayDroomB} & \hf{\dayDroomC} & \hf{\dayDroomD}  & \hf{\dayDroomF} \\ \hline
+\rf{\dayDtimeA} & \cf{\dayDroomAtimeA} & \cf{\dayDroomBtimeA} & \cf{\dayDroomCtimeA} & \cf{\dayDroomDtimeA}  & \cf{\dayDroomFtimeA}  \\[17mm] \hline
+%\rf{\dayDtimeB} & \cf{\dayDroomAtimeB} & \cf{\dayDroomBtimeB} & \cf{\dayDroomCtimeB} & \cf{\dayDroomDtimeB}  & \cf{\dayDroomFtimeB}  \\[17mm] \hline
+\rf{\dayDtimeB} &  \singlesessionrow{5}{\dayDpostertimeB} \\[8mm] \hline
+\rf{\dayDtimeC} & \cf{\dayDroomAtimeC} & \cf{\dayDroomBtimeC} & \cf{\dayDroomCtimeC} & \cf{\dayDroomDtimeC} & \cf{\dayDroomFtimeC}  \\[17mm] \hline
+\rf{\dayDtimeD} & \cf{\dayDroomAtimeD} & \cf{\dayDroomBtimeD} & \cf{\dayDroomCtimeD} & \cf{\dayDroomDtimeD} & \cf{\dayDroomFtimeD}  \\[17mm] \hline
+\rf{\dayDtimeE} & \cf{\dayDroomAtimeE} & \cf{\dayDroomBtimeE} & \cf{\dayDroomCtimeE} & \cf{\dayDroomDtimeE} & \cf{\dayDroomFtimeE}  \\[17mm] \hline
+\end{tabular}
+\end{sidewaystable} 
+
+
+
+
+
+\end{document}

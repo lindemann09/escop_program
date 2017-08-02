@@ -10,7 +10,7 @@
 \usepackage{graphicx}
 \usepackage{bold-extra}
 \usepackage{eurosym}
-
+\usepackage[figuresright]{rotating}
 
 \addtokomafont{section}{\rm\bf\LARGE\centering}
 \renewcommand{\descfont}{\rmfamily\bfseries}
@@ -44,7 +44,7 @@
 \newcommand{\overviewtimeslotbegin}[3]{
 	\vspace{3ex}
 	\begin{center}
-	\Large\bfseries{{#1 - #2\\ #3}} 
+	\Large\bfseries{{#1 -- #2\\ #3}} 
 	\end{center}
 
     %\begin{multicols}{2}
@@ -72,7 +72,7 @@
 	\item[\bfseries -] #2 {\slshape #3}}
 
 \newcommand{\talkshort}[5]{
-	\item[\bfseries #2-#3] #4 {\slshape #5}}
+	\item[\bfseries #2 -- #3] #4 {\slshape #5}}
 
 \newcommand{\escopabstract}[7]{
     %id, time, title, author, affiliations, email
@@ -103,4 +103,12 @@
     \par
 }
 \newcommand{\abstractsessionend}{}
+
+
+% table layout
+\definecolor{TabColor}{rgb}{0.88,1,1}
+\newcommand{\hf}[1]{\begin{center}\bfseries #1 \end{center}}
+\newcommand{\cf}[1]{\vspace{1mm}\parbox{28mm}{\centering #1}}
+\newcommand{\rf}[1]{\vspace{1mm}\parbox{10mm}{\bfseries #1}}
+\newcommand{\singlesessionrow}[2]{ \multicolumn{#1}{c|}{\parbox{40mm}{\vspace{3ex}\bfseries #2 }}}
 

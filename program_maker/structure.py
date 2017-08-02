@@ -305,20 +305,33 @@ class Conference():
         return self._session_dict[day][time].keys()
 
     def get_session(self, day, time, room):
-        return self._session_dict[day][time][room]
+        try:
+            return self._session_dict[day][time][room]
+        except:
+            return None
 
     def get_latest_end_time(self, day, time):
         latest_end = gmtime(0)
         for session in self._session_dict[day][time].values():
-            for x in session.contributions:
-                if latest_end < x.end:
-                    latest_end = x.end
+            if latest_end < session.end:
+                latest_end = session.end
         return strftime("%H:%M", latest_end)
 
-    def get_all_sessions_at_day(self, day):
+    def get_all_sessions_at_day(self, day, noposter=False):
         rtn = []
         for time in self.get_times(day):
             rtn.extend(self._session_dict[day][time].values())
 
         rtn.sort(key=lambda x: x.smallest_conf_id)
+        if noposter:
+            rtn = filter(lambda x: x.type!="poster", rtn)
+
         return rtn
+
+    def get_all_rooms(self, noposter=True):
+        # all rooms at the conference
+        rtn = []
+        for d in self.get_day_ids():
+            rtn.extend([x.room for x in self.get_all_sessions_at_day(d, noposter)])
+        return sorted(list(set(rtn)))
+
