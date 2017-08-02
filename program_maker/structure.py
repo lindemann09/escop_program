@@ -2,6 +2,7 @@ from time import gmtime, strftime, strptime
 from collections import OrderedDict
 from orderedset import OrderedSet
 from csv import DictReader
+from unidecode import unidecode as remove_accents
 
 from unicode_tex import unicode_to_tex
 
@@ -15,7 +16,6 @@ def unicode_list(txt, separator=","):
 def initials(name):
     # returns the initals of a name
     return ". ".join([x[0] for x in name.strip().split()]) + "."
-
 
 class Authors():
 
@@ -78,8 +78,10 @@ class Contribution():
 
 
     def formated_authors(self, fullnames=False, first_name_initials=False,
-                affiliation_ids=False, orga_id_format=u"[{0}]", tex_code=False):
+                affiliation_ids=False, orga_id_format=u"[{0}]",
+                tex_code=False, write_index=False):
         # tex_code=True: convert all unicode strings to text code, except keep untouched "orga_id_format"
+        # write_index: add index code (has only an effect if tex_code=True)
 
         if len(self.authors) == 1:
             if fullnames:
@@ -89,9 +91,11 @@ class Contribution():
                 if first_name_initials:
                     rtn += ", " + initials(self.first_names[0])
             if tex_code:
-                return unicode_to_tex(rtn)
-            else:
-                return rtn
+                rtn = unicode_to_tex(rtn)
+                if write_index:
+                    rtn += u"\\index{" + unicode_to_tex(remove_accents(self.last_names[0] + ", "
+                                                                       + initials(self.first_names[0]))) + u"}"
+            return rtn
 
         else:
             rtn = u""
@@ -108,6 +112,9 @@ class Contribution():
                         name += ", " + initials(self.first_names[cnt])
                 if tex_code:
                     rtn += unicode_to_tex(name)
+                    if write_index:
+                        rtn += u"\\index{" + unicode_to_tex(remove_accents(last_name + ", "
+                                                                           + initials(self.first_names[cnt]))) + u"}"
                 else:
                     rtn += name
                 if affiliation_ids and len(self.unique_organisations)>1:
