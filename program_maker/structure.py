@@ -1,7 +1,8 @@
 from time import gmtime, strftime, strptime
 from collections import OrderedDict
-from orderedset import OrderedSet
 from csv import DictReader
+from hashlib import sha1
+from orderedset import OrderedSet
 from unidecode import unidecode as remove_accents
 
 from unicode_tex import unicode_to_tex
@@ -17,10 +18,21 @@ def initials(name):
     # returns the initals of a name
     return ". ".join([x[0] for x in name.strip().split()]) + "."
 
+
+def secure_hash(filename):
+    """returns sha1 secure hash from file or None, if not possile"""
+    try:
+        with open(filename) as f:
+            return sha1(f.read()).hexdigest()
+    except:
+        return None
+
 class Authors():
 
     def __init__(self, authors_csv_file):
         self.authors = []
+        self.file = authors_csv_file
+        self.file_hash = secure_hash(self.file)
         with open(authors_csv_file, 'rb') as csvfile:
             for row in DictReader(csvfile, delimiter=',', quotechar='"'):
                 self.authors.append(row)
@@ -162,7 +174,7 @@ class Contribution():
 
 class Session():
 
-    def __init__(self, entry_dict, author_list, max_contributions=80):
+    def __init__(self, entry_dict, max_contributions=80):
         # entry_dict: entry from csv file DictReader
 
         self.dict = entry_dict
@@ -252,14 +264,14 @@ class Session():
 class Conference():
     """basically a ordered dict{day} of dict{time} of dict{room} all sessions"""
 
-    def __init__(self, sessions_csv, authors_csv):
-        print("processing: " + authors_csv)
-        self.authors = Authors(authors_csv)
+    def __init__(self, sessions_csv):
         s_dict = {}
         print("processing: " + sessions_csv)
+        self.file = sessions_csv
+        self.file_hash = secure_hash(self.file)
         with open(sessions_csv, 'rb') as csvfile:
             for row in DictReader(csvfile, delimiter=',', quotechar='"'):
-                session = Session(entry_dict=row, author_list=self.authors)
+                session = Session(entry_dict=row)
                 day = session.day
                 if not s_dict.has_key(day):
                     s_dict[day] = {}

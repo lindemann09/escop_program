@@ -11,11 +11,12 @@
   %halfparskip,
   %liststotoc,
 ]{scrartcl}
-\input{escop-layout.tex}
+\input{escop_tex/layout.tex}
 
 \usepackage{draftwatermark}
 \SetWatermarkScale{0.3}
 \SetWatermarkText{Preliminary Schedule}
+
 
 \begin{document}
 \sloppy
@@ -23,9 +24,15 @@
 \thispagestyle{empty}
 \begin{center}
 \unilogo\\
-\Huge\bfseries Potsdam\\ List of Contributions \\
+\Huge\bfseries Potsdam 
 \end{center}
+\newpage
 
-\input{"contribution_overview.incl.tex"}
+\input{"escop_tex/overview.tex"}
+
+\input{"escop_tex/contributions.tex"}
+
+\input{"escop_tex/abstracts.tex"}
+
 
 \end{document}

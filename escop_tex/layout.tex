@@ -10,7 +10,8 @@
 \usepackage{graphicx}
 \usepackage{bold-extra}
 \usepackage{eurosym}
-\usepackage[figuresright]{rotating}
+\usepackage{varwidth} % for rotation
+\usepackage{imakeidx}
 
 \addtokomafont{section}{\rm\bf\LARGE\centering}
 \renewcommand{\descfont}{\rmfamily\bfseries}
@@ -22,6 +23,9 @@
 \ifoot[]{}
 \cfoot[]{}
 \ofoot[]{}
+
+\usepackage[itemlayout=singlepar]{idxlayout}
+\makeindex
 
 \newcommand{\colbreak}{\vfill\null\columnbreak}
 

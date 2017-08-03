@@ -18,6 +18,7 @@ def contribution_list(conference, filename, list_contributions=True):
     # conference: conference_structure.Conference
 
     txt = u"%%%% CONTRIBUTION LIST \n"
+    txt += u"%% file: {} (sha1: {}) \n".format(conference.file, conference.file_hash)
     for d in conference.get_day_ids():
         weekday = conference.get_all_sessions_at_day(d)[0].weekday
         txt += u"\n\n\\overviewdaybegin{" + weekday + ", " + str(d) + " September 2017}\n"
@@ -117,6 +118,8 @@ def abstracts(conference, filename, write_index=False):
                 talks += txt
 
     txt = u"%%%% ABSTRACTS\n" + talks + poster
+    txt += u"%% file: {} (sha1: {}) \n".format(conference.file,
+                                                conference.file_hash)
     print("writing: " + filename)
     with open(filename, "wb") as f:
        f.write(txt.encode("UTF-8"))
@@ -160,7 +163,9 @@ def overview_table_code(conference, filename):
                     cmddict[day + room + time] = tmp
 
     # cmddict to text
-    txt = u"%%%% SESSION OVERVIEW \n"
+    txt = u"%%%% OVERVIEW TABLE COMMANDS\n"
+    txt += u"%% file: {} (sha1: {}) \n".format(conference.file,
+                                                conference.file_hash)
     for k,v in cmddict.iteritems():
         txt += u"\\newcommand{{\\{0}}}{{{1}}}\n".format(k,v)
 
