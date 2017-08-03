@@ -1,59 +1,91 @@
-
 \input{overview.incl.tex}
-\newpage
+% {time}{ncols}{text}
+\newcommand{\addrow}[3]{\vspace{-3ex}\rf{#1} & \singlesessionrow{#2}{#3} \\\hline }
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 
 %%%%% OVERVIEW DAY A
+{\centering\Huge\bfseries \dayA\par\vspace{5mm}}
+\begin{center} \sffamily
+\renewcommand{\arraystretch}{1.5}%
+\begin{tabular}{| >{\columncolor{TabColor}}p{10mm} | P{80mm} |}
+\hline
+\rowcolor{TabColor}  &  Session \\ \hline
+\vspace{-3ex}\rf{8:00 -- 16:00} &  Registration {\itshape (Foyer)} and \par Satellite Events {\itshape (Lecture Rooms)} \\\hline
+\vspace{-3ex}\rf{16:00 -- 17:00} &   Opening and Welcome Notes \par{\itshape (H3--4)} \\\hline
+\vspace{-3ex}\rf{17:15 -- 18:15} &  Keynote: Friedemann Pulvermüller \par{\itshape (H3--4)} \\\hline
+\vspace{-3ex}\rf{18:15 -- 19:30} &  \dayApostertimeA \\\hline
+\end{tabular}
+\end{center}
+
+\vfill
 
 %%%%% DAY B
+\newpage
+{\centering\Huge\bfseries \dayB\par\vspace{5mm}}
 \rotatebox{90}{
 \begin{varwidth}{\textheight}
-\sffamily\centering
-{\Huge\bfseries \dayB}\par\vspace{5mm}
+\sffamily
 \begin{tabular}{| >{\columncolor{TabColor}}p{10mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} |}
 \hline
 \rowcolor{TabColor}  &  \hf{\dayBroomA}  &  \hf{\dayBroomB} & \hf{\dayBroomC} & \hf{\dayBroomD} & \hf{\dayBroomE} & \hf{\dayBroomF} \\ \hline
-\rf{\dayBtimeA} & \cf{\dayBroomAtimeA} & \cf{\dayBroomBtimeA} & \cf{\dayBroomCtimeA} & \cf{\dayBroomDtimeA} & \cf{\dayBroomEtimeA} & \cf{\dayBroomFtimeA}  \\[17mm] \hline
-%\rf{\dayBtimeB} & \cf{\dayBroomAtimeB} & \cf{\dayBroomBtimeB} & \cf{\dayBroomCtimeB} & \cf{\dayBroomDtimeB} & \cf{\dayBroomEtimeB} & \cf{\dayBroomFtimeB}  \\[17mm] \hline
-\rf{\dayBtimeB} &  \singlesessionrow{6}{\dayBpostertimeB} \\[8mm] \hline
-\rf{\dayBtimeC} & \cf{\dayBroomAtimeC} & \cf{\dayBroomBtimeC} & \cf{\dayBroomCtimeC} & \cf{\dayBroomDtimeC} & \cf{\dayBroomEtimeC} & \cf{\dayBroomFtimeC}  \\[17mm] \hline
-\rf{\dayBtimeD} & \cf{\dayBroomAtimeD} & \cf{\dayBroomBtimeD} & \cf{\dayBroomCtimeD} & \cf{\dayBroomDtimeD} & \cf{\dayBroomEtimeD} & \cf{\dayBroomFtimeD}  \\[17mm] \hline
-\rf{\dayBtimeE} & \cf{\dayBroomAtimeE} & \cf{\dayBroomBtimeE} & \cf{\dayBroomCtimeE} & \cf{\dayBroomDtimeE} & \cf{\dayBroomEtimeE} & \cf{\dayBroomFtimeE}  \\[17mm] \hline
+\addrow{8:00 -- 9:00}{6}{Registration {\itshape (Foyer)}}
+\rf{\dayBtimeA} & \cf{\dayBroomAtimeA} & \cf{\dayBroomBtimeA} & \cf{\dayBroomCtimeA} & \cf{\dayBroomDtimeA} & \cf{\dayBroomEtimeA} & \cf{\dayBroomFtimeA}  \\ \hline
+\vspace{-3ex}\rf{\dayBtimeB} &  \singlesessionrow{6}{Coffee / \dayBpostertimeB} \\ \hline
+\addrow{12:00 -- 12:50}{6}{Lunch}
+\rf{\dayBtimeC} & \cf{\dayBroomAtimeC} & \cf{\dayBroomBtimeC} & \cf{\dayBroomCtimeC} & \cf{\dayBroomDtimeC} & \cf{\dayBroomEtimeC} & \cf{\dayBroomFtimeC}  \\ \hline
+\addrow{14:30 -- 14:40}{6}{Coffee}
+\rf{\dayBtimeD} & \cf{\dayBroomAtimeD} & \cf{\dayBroomBtimeD} & \cf{\dayBroomCtimeD} & \cf{\dayBroomDtimeD} & \cf{\dayBroomEtimeD} & \cf{\dayBroomFtimeD}  \\ \hline
+\addrow{16:20 -- 16:35}{6}{Coffee}
+\rf{\dayBtimeE} & \cf{\dayBroomAtimeE} & \cf{\dayBroomBtimeE} & \cf{\dayBroomCtimeE} & \cf{\dayBroomDtimeE} & \cf{\dayBroomEtimeE} & \cf{\dayBroomFtimeE}  \\ \hline
+\addrow{18:30 -- 19:30}{6}{Broadbent Lecture Beatrice de Gelder {\itshape (H3-H4)}}
+\addrow{19:30 -- 20:30}{6}{ESCoP Business Meeting  {\itshape (H3-H4)}}
 \end{tabular}
 \end{varwidth}}
 
 
 %%%%% DAY C (one room less)
+\newpage
+{\centering\Huge\bfseries \dayC\par\vspace{5mm}}
 \rotatebox{90}{
 \begin{varwidth}{\textheight}
-\sffamily\centering
-{\Huge\bfseries \dayC}\par\vspace{5mm}
+\sffamily
 \begin{tabular}{| >{\columncolor{TabColor}}p{10mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} |}
 \hline
 \rowcolor{TabColor}  &  \hf{\dayCroomA}  &  \hf{\dayCroomB} & \hf{\dayCroomC} & \hf{\dayCroomD} & \hf{\dayCroomF} \\ \hline
-\rf{\dayCtimeA} & \cf{\dayCroomAtimeA} & \cf{\dayCroomBtimeA} & \cf{\dayCroomCtimeA} & \cf{\dayCroomDtimeA}  & \cf{\dayCroomFtimeA}  \\[17mm] \hline
-%\rf{\dayCtimeB} & \cf{\dayCroomAtimeB} & \cf{\dayCroomBtimeB} & \cf{\dayCroomCtimeB} & \cf{\dayCroomDtimeB} & \cf{\dayCroomFtimeB}  \\[17mm] \hline
-\rf{\dayCtimeB} &  \singlesessionrow{5}{\dayCpostertimeB} \\[8mm] \hline
-\rf{\dayCtimeC} & \cf{\dayCroomAtimeC} & \cf{\dayCroomBtimeC} & \cf{\dayCroomCtimeC} & \cf{\dayCroomDtimeC} & \cf{\dayCroomFtimeC}  \\[17mm] \hline
-\rf{\dayCtimeD} & \cf{\dayCroomAtimeD} & \cf{\dayCroomBtimeD} & \cf{\dayCroomCtimeD} & \cf{\dayCroomDtimeD} & \cf{\dayCroomFtimeD}  \\[17mm] \hline
-\rf{\dayCtimeE} & \cf{\dayCroomAtimeE} & \cf{\dayCroomBtimeE} & \cf{\dayCroomCtimeE} & \cf{\dayCroomDtimeE} & \cf{\dayCroomFtimeE}  \\[17mm] \hline
+\addrow{8:00 -- 9:00}{5}{Registration {\itshape (Foyer)}}
+\rf{\dayCtimeA} & \cf{\dayCroomAtimeA} & \cf{\dayCroomBtimeA} & \cf{\dayCroomCtimeA} & \cf{\dayCroomDtimeA}  & \cf{\dayCroomFtimeA}  \\ \hline
+\vspace{-3ex}\rf{\dayCtimeB} &  \singlesessionrow{5}{Coffee / \dayCpostertimeB} \\ \hline
+\addrow{12:00 -- 12:50}{5}{Lunch}
+\rf{\dayCtimeC} & \cf{\dayCroomAtimeC} & \cf{\dayCroomBtimeC} & \cf{\dayCroomCtimeC} & \cf{\dayCroomDtimeC} & \cf{\dayCroomFtimeC}  \\\hline
+\addrow{14:30 -- 14:40}{5}{Coffee}
+\rf{\dayCtimeD} & \cf{\dayCroomAtimeD} & \cf{\dayCroomBtimeD} & \cf{\dayCroomCtimeD} & \cf{\dayCroomDtimeD} & \cf{\dayCroomFtimeD}  \\ \hline
+\addrow{14:30 -- 14:40}{5}{Coffee}
+\rf{\dayCtimeE} & \cf{\dayCroomAtimeE} & \cf{\dayCroomBtimeE} & \cf{\dayCroomCtimeE} & \cf{\dayCroomDtimeE} & \cf{\dayCroomFtimeE}  \\ \hline
+\addrow{19:00 }{5}{Social Event: Boat Cruise from Potsdam Harbour}
 \end{tabular}
 \end{varwidth}}
 
 %%%%% DAY D (one room less)
-
+\newpage
+{\centering\Huge\bfseries \dayD\par\vspace{5mm}}
 \rotatebox{90}{
 \begin{varwidth}{\textheight}
-\sffamily\centering
-{\Huge\bfseries \dayD}\par\vspace{5mm}
+\sffamily
 \begin{tabular}{| >{\columncolor{TabColor}}p{10mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} | p{28mm} |}
 \hline
 \rowcolor{TabColor}  &  \hf{\dayDroomA}  &  \hf{\dayDroomB} & \hf{\dayDroomC} & \hf{\dayDroomD}  & \hf{\dayDroomF} \\ \hline
-\rf{\dayDtimeA} & \cf{\dayDroomAtimeA} & \cf{\dayDroomBtimeA} & \cf{\dayDroomCtimeA} & \cf{\dayDroomDtimeA}  & \cf{\dayDroomFtimeA}  \\[17mm] \hline
-%\rf{\dayDtimeB} & \cf{\dayDroomAtimeB} & \cf{\dayDroomBtimeB} & \cf{\dayDroomCtimeB} & \cf{\dayDroomDtimeB}  & \cf{\dayDroomFtimeB}  \\[17mm] \hline
-\rf{\dayDtimeB} &  \singlesessionrow{5}{\dayDpostertimeB} \\[8mm] \hline
-\rf{\dayDtimeC} & \cf{\dayDroomAtimeC} & \cf{\dayDroomBtimeC} & \cf{\dayDroomCtimeC} & \cf{\dayDroomDtimeC} & \cf{\dayDroomFtimeC}  \\[17mm] \hline
-\rf{\dayDtimeD} & \cf{\dayDroomAtimeD} & \cf{\dayDroomBtimeD} & \cf{\dayDroomCtimeD} & \cf{\dayDroomDtimeD} & \cf{\dayDroomFtimeD}  \\[17mm] \hline
-\rf{\dayDtimeE} & \cf{\dayDroomAtimeE} & \cf{\dayDroomBtimeE} & \cf{\dayDroomCtimeE} & \cf{\dayDroomDtimeE} & \cf{\dayDroomFtimeE}  \\[17mm] \hline
+\addrow{8:00 -- 9:00}{5}{Registration {\itshape (Foyer)}}
+\rf{\dayDtimeA} & \cf{\dayDroomAtimeA} & \cf{\dayDroomBtimeA} & \cf{\dayDroomCtimeA} & \cf{\dayDroomDtimeA}  & \cf{\dayDroomFtimeA}  \\ \hline
+\vspace{-3ex}\rf{\dayDtimeB} &  \singlesessionrow{5}{Coffee / \dayDpostertimeB} \\ \hline
+\addrow{12:00 -- 12:50}{5}{Lunch}
+\rf{\dayDtimeC} & \cf{\dayDroomAtimeC} & \cf{\dayDroomBtimeC} & \cf{\dayDroomCtimeC} & \cf{\dayDroomDtimeC} & \cf{\dayDroomFtimeC}  \\ \hline
+\addrow{14:30 -- 14:40}{5}{Coffee}
+\rf{\dayDtimeD} & \cf{\dayDroomAtimeD} & \cf{\dayDroomBtimeD} & \cf{\dayDroomCtimeD} & \cf{\dayDroomDtimeD} & \cf{\dayDroomFtimeD}  \\ \hline
+\addrow{14:30 -- 14:40}{5}{Coffee}
+\rf{\dayDtimeE} & \cf{\dayDroomAtimeE} & \cf{\dayDroomBtimeE} & \cf{\dayDroomCtimeE} & \cf{\dayDroomDtimeE} & \cf{\dayDroomFtimeE}  \\ \hline
+\addrow{18:30 -- 19:30}{5}{Bertelson Lecture: Michael Banissy {\itshape (H3-H4)}}
+\addrow{19:30 -- 20:30}{5}{20$^\mathrm{th}$ ESCoP Celebration {\itshape (H3-H4)}}
+\addrow{20:30 }{5}{Science Slam  }
 \end{tabular}
 \end{varwidth}}
 

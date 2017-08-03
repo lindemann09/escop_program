@@ -148,17 +148,25 @@ def overview_table_code(conference, filename):
         for tn, t in enumerate(conference.get_times(d)):
             time = u"time" + chr(65 + tn)
             end = conference.get_latest_end_time(d,t)
-            cmddict[day+time] = u"{0}-{1}".format(t,end)
+            cmddict[day+time] = u"{0} -- {1}".format(t,end)
+            poster_rooms = u", ".join(conference.get_rooms(d, t))
+            x = poster_rooms.rfind(",")
+            poster_rooms = unicode_to_tex(poster_rooms[:x] + " &" + poster_rooms[(x+1):])
             for r in conference.get_rooms(d, t):
                 session = conference.get_session(d, t, r)
                 if session.type == "poster":
-                    cmddict[day + "poster" + time] = session.title[:session.title.find(" - ")].strip()
+                    cmddict[day + "poster" + time] = "{ " + session.title[:session.title.find(" - ")].strip() + \
+                        "}\\par {\\itshape Rooms: " + poster_rooms + "}"
                     # fixme poster rooms
                 else:
+                    # shorten title with subtitle (: -)
+                    tmp = session.title
+                    x = max([tmp.find(":"), tmp.find("-")])
+                    if x>0:
+                        tmp = tmp[:x]
                     if session.type == "symposium":
-                        tmp = "Symposium: " + session.title
-                    else:
-                        tmp = session.title
+                        tmp = u"(S) " + tmp
+                    tmp += u" \\par{{\\itshape ({} -- {})}}".format(session.smallest_conf_id, session.largets_conf_id)
                     room = u"room" + chr(65 + rooms.index(session.room))
                     cmddict[day + room + time] = tmp
 

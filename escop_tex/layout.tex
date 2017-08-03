@@ -12,6 +12,7 @@
 \usepackage{eurosym}
 \usepackage{varwidth} % for rotation
 \usepackage{imakeidx}
+\usepackage{multirow}
 
 \addtokomafont{section}{\rm\bf\LARGE\centering}
 \renewcommand{\descfont}{\rmfamily\bfseries}
@@ -110,9 +111,10 @@
 
 
 % table layout
-\definecolor{TabColor}{rgb}{0.88,1,1}
+%\definecolor{TabColor}{rgb}{0.88,1,1}
+\definecolor{TabColor}{HTML}{3876c4}
 \newcommand{\hf}[1]{\begin{center}\bfseries #1 \end{center}}
-\newcommand{\cf}[1]{\vspace{1mm}\parbox{28mm}{\centering #1}}
-\newcommand{\rf}[1]{\vspace{1mm}\parbox{10mm}{\bfseries #1}}
-\newcommand{\singlesessionrow}[2]{ \multicolumn{#1}{c|}{\parbox{40mm}{\vspace{3ex}\bfseries #2 }}}
+\newcommand{\cf}[1]{\begin{center} #1 \end{center}}
+\newcommand{\rf}[1]{\vspace{1ex}\raggedright\bfseries #1 }
+\newcommand{\singlesessionrow}[2]{ \multicolumn{#1}{c|}{\parbox{120mm}{\begin{center} #2 \end{center} }}}
 
