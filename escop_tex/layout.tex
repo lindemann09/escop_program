@@ -15,8 +15,12 @@
 \usepackage{multirow}
 \usepackage{hhline}
 
-\addtokomafont{section}{\rm\bf\LARGE\centering}
+
+\addtokomafont{section}{\Huge\centering}
+\addtokomafont{subsection}{\large\centering}
 \renewcommand{\descfont}{\rmfamily\bfseries}
+
+\setcounter{secnumdepth}{0} % no numbering of sections 
 
 \pagestyle{scrheadings}
 \ihead[]{}
@@ -27,8 +31,9 @@
 \ofoot[]{}
 \setheadsepline{0.3pt}
 
+
 \usepackage[itemlayout=singlepar]{idxlayout}
-\makeindex
+\makeindex[intoc]
 
 \newcommand{\colbreak}{\vfill\null\columnbreak}
 
@@ -39,10 +44,11 @@
 
 
 \newcommand{\overviewdaybegin}[1]{
-	%\newpage
+	\newpage
     \chead[]{\slshape #1}
 	\vspace{4ex}\begin{center}
-	\LARGE\bfseries{\scshape{#1}}
+	%\LARGE\bfseries{\scshape{#1}}
+	\section{#1}
 	\end{center}	}
 
 \newcommand{\overviewdayend}{
@@ -53,7 +59,7 @@
 	\begin{center}
 	\Large\bfseries{{#1 -- #2\\ #3}} 
 	\end{center}
-
+	\addcontentsline{toc}{subsection}{#1: #3}
     %\begin{multicols}{2}
 	}
 
@@ -61,7 +67,7 @@
     %\end{multicols}
 }
 
-\newcommand{\overiewsessionbegin}[5]{ 
+\newcommand{\overviewsessionbegin}[5]{ 
             \begin{minipage}{\linewidth}
             % id-range, type, room, title, info (e.g. chair)
 			\vspace{3ex}\par\noindent {\large\bfseries #3: #2 \\#4} #5
@@ -69,16 +75,16 @@
 			\begin{description}
 }
 
-\newcommand{\overiewsessionend}{
+\newcommand{\overviewsessionend}{
 	\end{description}
 	\end{minipage}
     }
 
-\newcommand{\overiewposterbegin}{
+\newcommand{\overviewposterbegin}{
             \par\noindent \begin{description}
 }
 
-\newcommand{\overiewposterend}{
+\newcommand{\overviewposterend}{
 	\end{description}}
 
 
@@ -94,7 +100,7 @@
     \begin{centering}
     {$\cdot\cdot$~~#2 (#1)~~$\cdot\cdot$} \par
     \end{centering}
-    {\noindent\bfseries #5}. %\vspace{1ex}\par
+    {\noindent\bfseries #5} %\vspace{1ex}\par
     {\scshape #3}; %\vspace{1ex} \par
     {\itshape #4}\par
     #6 \par

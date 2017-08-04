@@ -14,7 +14,7 @@ def punctuation(txt):
     return txt
 
 
-def contribution_list(conference, filename, list_contributions=True):
+def contribution_list(conference, filename, list_contributions=True, talks_first=False):
     # conference: conference_structure.Conference
 
     txt = u"%%%% CONTRIBUTION LIST \n"
@@ -22,25 +22,27 @@ def contribution_list(conference, filename, list_contributions=True):
     for d in conference.get_day_ids():
         weekday = conference.get_all_sessions_at_day(d)[0].weekday
         txt += u"\n\n\\overviewdaybegin{" + weekday + ", " + str(d) + " September 2017}\n"
-
+        
+        poster = u""
+        talks = u""
         for t in conference.get_times(d):
             newtime_begin_required = True
-
+            tmptxt = u""
             for r in conference.get_rooms(d, t):
                 session = conference.get_session(d, t, r)
                 if newtime_begin_required:
                     if session.type == "poster":
-                        txt += u"\n\\overviewtimeslotbegin" + tex_args(t, session.end_str,
+                        tmptxt += u"\n\\overviewtimeslotbegin" + tex_args(t, session.end_str,
                                 session.title[:session.title.find("-")].strip()) + "\n"
                     else:
-                        txt += u"\n\\overviewtimeslotbegin" + tex_args(t, session.end_str, "Spoken Session") + "\n"
+                        tmptxt += u"\n\\overviewtimeslotbegin" + tex_args(t, session.end_str, "Talks & Symposia") + "\n"
                     newtime_begin_required = False
 
                 if session.type == "poster":
-                    txt += u"\\overiewposterbegin{}\n"
+                    tmptxt += u"\\overviewposterbegin{}\n"
                 else:
                     if session.type == "symposium":
-                        type_txt = "Symposium"
+                        tmptype_txt = "Symposium"
                         if len(session.chair) > 0:
                             info_code = u"{\\newline{\\itshape Organized by " + unicode_to_tex(plain_name(session.chair)) + u"}}"
                         else:
@@ -52,27 +54,36 @@ def contribution_list(conference, filename, list_contributions=True):
                         else:
                             info_code = u"{}"
 
-                    txt += u"\n\\overiewsessionbegin" + tex_args(u"{}-{}".format(session.smallest_conf_id, session.largets_conf_id),
+                    tmptxt += u"\n\\overviewsessionbegin" + tex_args(u"{}-{}".format(session.smallest_conf_id, session.largets_conf_id),
                                                                  type_txt, session.room,
                                                                  session.title) + info_code +"\n"
                 if (list_contributions):
                     for c in session.contributions:
                         if c.type == "poster":
-                            txt += u"    \\postershort" + tex_args(c.conf_id,
+                            tmptxt += u"    \\postershort" + tex_args(c.conf_id,
                                                                    punctuation(c.formated_authors(fullnames=False, first_name_initials=False)),
                                                                    punctuation(c.title)) +"\n"
                         else:
-                            txt += u"    \\talkshort" + tex_args(c.conf_id, c.start_str, c.end_str,
+                            tmptxt += u"    \\talkshort" + tex_args(c.conf_id, c.start_str, c.end_str,
                                                                  punctuation(c.formated_authors(fullnames=False, first_name_initials=False)),
                                                                  punctuation(c.title)) + "\n"
                 if session.type == "poster":
-                    txt += u"\overiewposterend{}\n\n"
+                    tmptxt += u"\overviewposterend{}\n\n"
                 else:
-                    txt += u"\overiewsessionend{}\n\n"
+                    tmptxt += u"\overviewsessionend{}\n\n"
 
-            txt += u"\n\\overviewtimeslotend{}\n"
+            tmptxt += u"\n\\overviewtimeslotend{}\n"
+            if talks_first:
+                if session.type == "poster": # last session type
+                    poster += tmptxt
+                else:
+                    talks += tmptxt
+            else:
+                txt += tmptxt
+
+        if talks_first:
+            txt += talks + poster
         txt += u"\n\n\\overviewdayend{}\n"
-
 
     print("writing: " + filename)
     with open(filename, "wb") as f:
