@@ -4,6 +4,7 @@ from csv import DictReader
 from hashlib import sha1
 from orderedset import OrderedSet
 from unidecode import unidecode as remove_accents
+from titlecase import titlecase
 
 from unicode_tex import unicode_to_tex
 
@@ -18,6 +19,17 @@ def initials(name):
     # returns the initals of a name
     return ". ".join([x[0] for x in name.strip().split()]) + "."
 
+def fix_uppercase(textstring, percent_uppercase_threshold=75):
+    # converts string to titlecase (NY times style), if all
+    #  (A) case are lower cases
+    #  (B) x-% are in uppercase (see percent_uppercase_threshold)
+
+    n = len(textstring)
+    n_upper = sum([x.isupper() for x in textstring])
+    if (n_upper==0) or (100*float(n_upper)/n)>percent_uppercase_threshold:
+        return titlecase(textstring)
+    else:
+        return textstring
 
 def secure_hash(filename):
     """returns sha1 secure hash from file or None, if not possile"""
@@ -55,7 +67,7 @@ class Authors():
 
 class Contribution():
 
-    def __init__(self, authors, title, organizations, abstract, type, start, end, emails):
+    def __init__(self, authors, title, organizations, abstract, type, start, end, emails, fix_uppercase_title=True):
         # organisations for each author len(authors)==len(organizations)
         # multiple organisation of one authors are seperated by ";"
         # start ,end: time.struct_time
@@ -67,6 +79,9 @@ class Contribution():
         self.start = start
         self.end = end
         self.emails = emails
+
+        if fix_uppercase_title:
+            self.title = fix_uppercase(self.title)
 
         # find all organizations
         self.unique_organisations = []
