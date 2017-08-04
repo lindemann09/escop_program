@@ -42,13 +42,13 @@ def contribution_list(conference, filename, list_contributions=True):
                     if session.type == "symposium":
                         type_txt = "Symposium"
                         if len(session.chair) > 0:
-                            info_code = u"{\\newline\\itshape{Organized by " + unicode_to_tex(plain_name(session.chair)) + u"}}"
+                            info_code = u"{\\newline{\\itshape Organized by " + unicode_to_tex(plain_name(session.chair)) + u"}}"
                         else:
                             info_code = u"{}"
                     else:
                         type_txt = ""
                         if len(session.chair) > 0:
-                            info_code = u"{\\newline\\itshape{Chaired by " + unicode_to_tex(plain_name(session.chair)) + u"}}"
+                            info_code = u"{\\newline{\\itshape Chaired by " + unicode_to_tex(plain_name(session.chair)) + u"}}"
                         else:
                             info_code = u"{}"
 
@@ -59,13 +59,16 @@ def contribution_list(conference, filename, list_contributions=True):
                     for c in session.contributions:
                         if c.type == "poster":
                             txt += u"    \\postershort" + tex_args(c.conf_id,
-                                                c.formated_authors(fullnames=False, first_name_initials=False),
+                                                                   punctuation(c.formated_authors(fullnames=False, first_name_initials=False)),
                                                                    punctuation(c.title)) +"\n"
                         else:
                             txt += u"    \\talkshort" + tex_args(c.conf_id, c.start_str, c.end_str,
-                                                c.formated_authors(fullnames=False, first_name_initials=False),
+                                                                 punctuation(c.formated_authors(fullnames=False, first_name_initials=False)),
                                                                  punctuation(c.title)) + "\n"
-                txt += u"\overiewsessionend{}\n\n"
+                if session.type == "poster":
+                    txt += u"\overiewposterend{}\n\n"
+                else:
+                    txt += u"\overiewsessionend{}\n\n"
 
             txt += u"\n\\overviewtimeslotend{}\n"
         txt += u"\n\n\\overviewdayend{}\n"

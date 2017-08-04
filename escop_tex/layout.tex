@@ -60,24 +60,33 @@
 }
 
 \newcommand{\overiewsessionbegin}[5]{ 
+            \begin{minipage}{\linewidth}
             % id-range, type, room, title, info (e.g. chair)
 			\vspace{3ex}\par\noindent {\large\bfseries #3: #2 \\#4} #5
             
-			\begin{description}}
+			\begin{description}
+}
+
+\newcommand{\overiewsessionend}{
+	\end{description}
+	\end{minipage}
+    }
 
 \newcommand{\overiewposterbegin}{
             \par\noindent \begin{description}
 }
 
-\newcommand{\overiewsessionend}{
+\newcommand{\overiewposterend}{
 	\end{description}}
 
 
+
+
 \newcommand{\postershort}[3]{
-	\item[\bfseries -] #2 {\slshape #3}}
+	\item[\bfseries -] #2 {\itshape #3}}
 
 \newcommand{\talkshort}[5]{
-	\item[\bfseries #2 -- #3] #4 {\slshape #5}}
+	\item[\bfseries #2 -- #3] #4 {\itshape #5}}
 
 \newcommand{\escopabstract}[7]{
     %id, time, title, author, affiliations, email
@@ -87,7 +96,7 @@
     \end{centering}
     {\noindent\bfseries #5}. %\vspace{1ex}\par
     {\scshape #3}; %\vspace{1ex} \par
-    {\slshape #4}\par
+    {\itshape #4}\par
     #6 \par
     %\end{minipage}\hfill\hbox{}
     {\noindent Email: \vspace{1em} #7\par}
