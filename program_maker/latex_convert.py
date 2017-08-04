@@ -42,7 +42,7 @@ def contribution_list(conference, filename, list_contributions=True, talks_first
                     tmptxt += u"\\overviewposterbegin{}\n"
                 else:
                     if session.type == "symposium":
-                        tmptype_txt = "Symposium"
+                        type_txt = "Symposium"
                         if len(session.chair) > 0:
                             info_code = u"{\\newline{\\itshape Organized by " + unicode_to_tex(plain_name(session.chair)) + u"}}"
                         else:
@@ -123,7 +123,7 @@ def abstracts(conference, filename, write_index=False):
                                                                   tex_code=True,
                                                                   write_index=write_index) + u"}" + \
                                         u"{" + c.formated_organisations(orga_id_format=u"$^{{{0}}}$", tex_code=True) + u"}" + \
-                                        tex_args(c.title, c.abstract, c.first_author_email) + "\n\n"
+                                        tex_args(punctuation(c.title), c.abstract, c.first_author_email) + "\n\n"
 
             txt += u"\\abstractsessionend{}\n\n"
             if session.type == "poster":
@@ -131,9 +131,11 @@ def abstracts(conference, filename, write_index=False):
             else:
                 talks += txt
 
-    txt = u"%%%% ABSTRACTS\n" + talks + poster
+    txt = u"%%%% ABSTRACTS\n"
     txt += u"%% file: {} (sha1: {}) \n".format(conference.file,
                                                 conference.file_hash)
+    txt += talks + poster
+
     print("writing: " + filename)
     with open(filename, "wb") as f:
        f.write(txt.encode("UTF-8"))
