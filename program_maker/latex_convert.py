@@ -160,11 +160,10 @@ def overview_table_code(conference, filename):
                 if session.type == "poster":
                     cmddict[day + "poster" + time] = "{ " + session.title[:session.title.find(" - ")].strip() + \
                         "}\\par {\\itshape Rooms: " + poster_rooms + "}"
-                    # fixme poster rooms
                 else:
                     # shorten title with subtitle (: -)
                     tmp = session.title
-                    x = max([tmp.find(":"), tmp.find("-")])
+                    x = max([tmp.find(":"), tmp.find(" - ")])
                     if x>0:
                         tmp = tmp[:x]
                     if session.type == "symposium":

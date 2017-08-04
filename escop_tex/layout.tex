@@ -13,17 +13,19 @@
 \usepackage{varwidth} % for rotation
 \usepackage{imakeidx}
 \usepackage{multirow}
+\usepackage{hhline}
 
 \addtokomafont{section}{\rm\bf\LARGE\centering}
 \renewcommand{\descfont}{\rmfamily\bfseries}
 
 \pagestyle{scrheadings}
 \ihead[]{}
-\chead[]{}
+\chead[]{ESCoP 2017, Potsdam}
 \ohead[\pagemark]{\itshape\pagemark}
 \ifoot[]{}
 \cfoot[]{}
 \ofoot[]{}
+\setheadsepline{0.3pt}
 
 \usepackage[itemlayout=singlepar]{idxlayout}
 \makeindex
@@ -83,10 +85,10 @@
 
 
 \newcommand{\postershort}[3]{
-	\item[\bfseries -] #2 {\itshape #3}}
+	\item[\bfseries #1] #2 {\itshape #3}}
 
 \newcommand{\talkshort}[5]{
-	\item[\bfseries #2 -- #3] #4 {\itshape #5}}
+	\item[\bfseries #2 -- #3] #4 {\itshape #5} (#1)}
 
 \newcommand{\escopabstract}[7]{
     %id, time, title, author, affiliations, email
@@ -121,7 +123,8 @@
 
 % table layout
 %\definecolor{TabColor}{rgb}{0.88,1,1}
-\definecolor{TabColor}{HTML}{3876c4}
+\definecolor{TabColor}{HTML}{dddddd}
+%\definecolor{TabColor}{HTML}{3876c4}
 \newcommand{\hf}[1]{\begin{center}\bfseries #1 \end{center}}
 \newcommand{\cf}[1]{\begin{center} #1 \end{center}}
 \newcommand{\rf}[1]{\vspace{1ex}\raggedright\bfseries #1 }
